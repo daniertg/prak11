@@ -15,8 +15,8 @@ class MahasiswaResource extends JsonResource
     public function toArray($request)
     {
         return [
-        'Nim'=>$this->Nim,
-        'Nama'=>$this->Nama,
+            'Nim' => $this->Nim,
+            'Nama' => $this->Nama,
         ];
     }
 }
