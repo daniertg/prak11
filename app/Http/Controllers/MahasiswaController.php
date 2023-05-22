@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMahasiswaRequests;
+use App\Http\Requests\UpdateMahasiswaRequest;
+use Illuminate\Http\Request;
 use App\Http\Resources\MahasiswaResource;
 use App\Models\Mahasiswa;
-use Illuminate\Http\Request;
+
 
 class MahasiswaController extends Controller
 {
@@ -17,7 +19,8 @@ class MahasiswaController extends Controller
     public function index()
     {
         //
-        return MahasiswaResource::collection(Mahasiswa::paginate(5));
+        // return MahasiswaResource::collection(Mahasiswa::all());
+        return MahasiswaResource::collection(Mahasiswa::orderBy('nim', 'asc')->paginate(5));
     }
 
     /**
@@ -38,18 +41,23 @@ class MahasiswaController extends Controller
      */
     public function store(StoreMahasiswaRequests $request)
     {
+        //
+        // return response()->json('hello');
         return new MahasiswaResource(Mahasiswa::create(
             [
-                'Nim' => $request->Nim,
-                'Nama' => $request->Nama,
+                'nim' => $request->nim,
+                'nama' => $request->nama,
+                'kelas_id' => $request->kelas_id,
+                'jurusan' => $request->jurusan,
+                'no_hp' => $request->no_hp,
             ]
-            ));
+        ));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Mahasiswa  $mahasiswa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show(Mahasiswa $mahasiswa)
@@ -61,10 +69,10 @@ class MahasiswaController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Mahasiswa  $mahasiswa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mahasiswa $mahasiswa)
+    public function edit($id)
     {
         //
     }
@@ -73,22 +81,32 @@ class MahasiswaController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Mahasiswa  $mahasiswa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mahasiswa $mahasiswa)
+    public function update(UpdateMahasiswaRequest $request, Mahasiswa $mahasiswa)
     {
         //
+        $mahasiswa->update([
+            'nim' => $request->nim,
+            'nama' => $request->nama,
+            'jurusan' => $request->jurusan,
+            'no_hp' => $request->no_hp,
+            'kelas_id' => $request->kelas_id,
+        ]);
+        return new MahasiswaResource($mahasiswa);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Mahasiswa  $mahasiswa
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Mahasiswa $mahasiswa)
     {
         //
+        $mahasiswa->delete();
+        return response()->noContent();
     }
 }

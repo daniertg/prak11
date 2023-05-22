@@ -14,9 +14,13 @@ class MahasiswaResource extends JsonResource
      */
     public function toArray($request)
     {
+        // return parent::toArray($request);
         return [
-            'Nim' => $this->Nim,
-            'Nama' => $this->Nama,
+            'nim' => $this->nim,
+            'nama' => $this->nama,
+            'kelas_id' => $this->kelas_id,
+            'jurusan' => strtoupper($this->jurusan),
+            'no_hp' => $this->no_hp,
         ];
     }
 }
