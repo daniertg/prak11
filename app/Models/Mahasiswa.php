@@ -10,6 +10,7 @@ class Mahasiswa extends Model
     use HasFactory;
 
     protected $table = 'mahasiswas'; // Eloquent akan membuat model mahasiswa menyimpan record di tabel mahasiswas
+    public $timestamps = false;
     protected $primaryKey = 'nim'; // Memanggil isi DB dengan Primary Key
     public $incrementing = false;
 
