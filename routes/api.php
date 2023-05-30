@@ -28,6 +28,7 @@ Route::get('/hello', function () {
 Route::apiResource('/mahasiswa',MahasiswaController::class);
 
 Route::post('login',[ApiAuthController::class,'login']);
+Route::post('register',[ApiAuthController::class,'register']);
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/hello', function () {
